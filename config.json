@@ -19,7 +19,7 @@
   "alerts": {
     "desktop_notifications": true,
     "sound": true,
-    "discord_webhook_url": "https://discord.com/api/webhooks/1552736036617064558/9RkSzvuixBPjYmwPbjJ1nhThemkCt0u96tp1eY29ggeHHbFI1Anzqw2_cncfim8qBk8w",
+    "discord_webhook_url": "",
     "telegram": {
       "enabled": false,
       "bot_token": "",
