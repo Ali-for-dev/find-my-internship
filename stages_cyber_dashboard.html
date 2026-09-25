@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CyberStage Radar | Stages Cybersécurité France</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #090d16;
+      --card-bg: rgba(16, 23, 38, 0.85);
+      --card-border: rgba(0, 240, 255, 0.18);
+      --accent: #00f0ff;
+      --accent-glow: rgba(0, 240, 255, 0.4);
+      --accent-green: #00ff88;
+      --accent-purple: #9d4edd;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --badge-linkedin: #0a66c2;
+      --badge-hellowork: #ff5400;
+      --badge-francetravail: #003b80;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.5;
+      background-image: 
+        radial-gradient(ellipse at 10% 20%, rgba(0, 240, 255, 0.08) 0%, transparent 40%),
+        radial-gradient(ellipse at 90% 80%, rgba(157, 78, 221, 0.08) 0%, transparent 40%);
+      background-attachment: fixed;
+    }
+    header {
+      padding: 2.5rem 1.5rem 1.5rem;
+      max-width: 1300px;
+      margin: 0 auto;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .logo-block {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .shield-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #00f0ff, #9d4edd);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      box-shadow: 0 0 20px var(--accent-glow);
+    }
+    h1 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #fff;
+    }
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+    .stats-bar {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .stat-pill {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-family: 'JetBrains Mono', monospace;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .stat-pill strong {
+      color: var(--accent);
+      font-size: 1.05rem;
+    }
+    .container {
+      max-width: 1300px;
+      margin: 2rem auto;
+      padding: 0 1.5rem 4rem;
+    }
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 1rem 1.25rem;
+      border-radius: 14px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(12px);
+    }
+    .search-box {
+      flex: 1;
+      min-width: 260px;
+      position: relative;
+    }
+    .search-box input {
+      width: 100%;
+      background: rgba(0,0,0,0.4);
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 0.75rem 1rem 0.75rem 2.5rem;
+      border-radius: 10px;
+      color: #fff;
+      font-family: inherit;
+      font-size: 0.95rem;
+      outline: none;
+      transition: all 0.2s;
+    }
+    .search-box input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 12px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+    .filters {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--text);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--accent);
+      color: #000;
+      border-color: var(--accent);
+      font-weight: 600;
+      box-shadow: 0 0 14px var(--accent-glow);
+    }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+      gap: 1.25rem;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 1.4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(8px);
+    }
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-purple));
+      opacity: 0.4;
+      transition: opacity 0.25s;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent);
+      box-shadow: 0 12px 28px rgba(0, 240, 255, 0.15);
+    }
+    .card:hover::before {
+      opacity: 1;
+    }
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+    .badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .badge-linkedin { background: rgba(10, 102, 194, 0.25); color: #5db2ff; border: 1px solid rgba(10, 102, 194, 0.5); }
+    .badge-hellowork { background: rgba(255, 84, 0, 0.25); color: #ff9d66; border: 1px solid rgba(255, 84, 0, 0.5); }
+    .badge-francetravail { background: rgba(0, 110, 255, 0.25); color: #70b4ff; border: 1px solid rgba(0, 110, 255, 0.5); }
+    .badge-stage { background: rgba(0, 255, 136, 0.15); color: var(--accent-green); border: 1px solid rgba(0, 255, 136, 0.3); }
+    .job-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.5rem;
+      line-height: 1.35;
+    }
+    .company-name {
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .location {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-bottom: 1.25rem;
+    }
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      margin-top: auto;
+    }
+    .detected-date {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .apply-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: linear-gradient(135deg, var(--accent), #00b4d8);
+      color: #050b14;
+      text-decoration: none;
+      padding: 0.55rem 1rem;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+    .apply-btn:hover {
+      box-shadow: 0 0 16px var(--accent-glow);
+      transform: scale(1.03);
+    }
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 4rem 1rem;
+      color: var(--text-muted);
+    }
+    @media (max-width: 768px) {
+      .cards-grid { grid-template-columns: 1fr; }
+      header { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo-block">
+      <div class="shield-icon">🛡️</div>
+      <div>
+        <h1>CyberStage Radar // France</h1>
+        <p class="subtitle">Veille automatisée des offres de stage en Cybersécurité (Toute la France)</p>
+      </div>
+    </div>
+    <div class="stats-bar">
+      <div class="stat-pill">Total: <strong id="totalCount">102</strong></div>
+      <div class="stat-pill">LinkedIn: <strong>60</strong></div>
+      <div class="stat-pill">HelloWork: <strong>42</strong></div>
+      <div class="stat-pill">France Travail: <strong>0</strong></div>
+      <div class="stat-pill">Scan: <span>25/09/2026 à 22:43</span></div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="toolbar">
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" placeholder="Rechercher par mot-clé, entreprise, ville (ex: Pentest, Capgemini, Paris, Rennes)...">
+      </div>
+      <div class="filters">
+        <button class="filter-btn active" data-source="ALL">TOUTES</button>
+        <button class="filter-btn" data-source="LinkedIn">LinkedIn</button>
+        <button class="filter-btn" data-source="HelloWork">HelloWork</button>
+        <button class="filter-btn" data-source="France Travail">France Travail</button>
+      </div>
+    </div>
+
+    <div class="cards-grid" id="cardsGrid">
+      <!-- Rendu dynamique via JavaScript -->
+    </div>
+  </div>
+
+  <script>
+    const ALL_OFFERS = [{"id": "b724e5ddf0e05cf4", "title": "Stage Pentest et Sécurité Applicative H/F", "company": "Bouygues Telecom", "location": "Meudon - 92", "link": "https://www.hellowork.com/fr-fr/emplois/83786111.html", "source": "HelloWork", "first_seen": "2026-09-25 20:41"}, {"id": "85b48a1789fbdb56", "title": "Stage - Consultant cybersécurité SECOP - PKI - H/F", "company": "SYNETIS", "location": "Paris", "link": "https://fr.linkedin.com/jobs/view/stage-consultant-cybers%C3%A9curit%C3%A9-secop-pki-h-f-at-synetis-4470301821", "source": "LinkedIn", "first_seen": "2026-09-25 16:20"}, {"id": "335abb54a026e734", "title": "Stage pentest et sécurité applicative F/H", "company": "Bouygues Telecom", "location": "Meudon", "link": "https://fr.linkedin.com/jobs/view/stage-pentest-et-s%C3%A9curit%C3%A9-applicative-f-h-at-bouygues-telecom-4472028170", "source": "LinkedIn", "first_seen": "2026-09-25 16:20"}, {"id": "be924bf380868fb7", "title": "STAGE en cybersécurité H/F", "company": "Elée", "location": "Puteaux", "link": "https://fr.linkedin.com/jobs/view/stage-en-cybers%C3%A9curit%C3%A9-h-f-at-el%C3%A9e-4469676502", "source": "LinkedIn", "first_seen": "2026-09-25 16:20"}, {"id": "9076d9282edd2f8b", "title": "Pentester / SDM H/F", "company": "SYNETIS", "location": "Paris", "link": "https://fr.linkedin.com/jobs/view/pentester-sdm-h-f-at-synetis-4431596955", "source": "LinkedIn", "first_seen": "2026-09-25 16:20"}, {"id": "adca1f49f780b85c", "title": "Stage Conseil Consultant en Cybersécurité H/F", "company": "CGI", "location": "Paris - 75", "link": "https://www.hellowork.com/fr-fr/emplois/83778022.html", "source": "HelloWork", "first_seen": "2026-09-25 16:20"}, {"id": "b6fdb09b7f024e28", "title": "Stage Logiciel Automatisation d'Autotests pour Os Cybersécurisés H/F", "company": "MBDA", "location": "Le Plessis-Robinson - 92", "link": "https://www.hellowork.com/fr-fr/emplois/83778076.html", "source": "HelloWork", "first_seen": "2026-09-25 16:20"}, {"id": "f17f839c1bc79419", "title": "STAGE -  Cybersécurité de l'IA - F/H", "company": "Thales", "location": "La Ciotat", "link": "https://fr.linkedin.com/jobs/view/stage-cybers%C3%A9curit%C3%A9-de-l-ia-f-h-at-thales-4472011000", "source": "LinkedIn", "first_seen": "2026-09-25 15:19"}, {"id": "4e1d8c858471306f", "title": "Security Engineer - Pentester", "company": "Scaleway", "location": "Paris", "link": "https://fr.linkedin.com/jobs/view/security-engineer-pentester-at-scaleway-4470115595", "source": "LinkedIn", "first_seen": "2026-09-25 11:17"}, {"id": "640f67a757279a17", "title": "Ingénieur en data - Optimisation d'une base de données et suivi d'incidents cyber [Stage]", "company": "Commandement de la cyberdéfense (COMCYBER)", "location": "Paris", "link": "https://fr.linkedin.com/jobs/view/ing%C3%A9nieur-en-data-optimisation-d-une-base-de-donn%C3%A9es-et-suivi-d-incidents-cyber-stage-at-french-cyber-command-4458408031", "source": "LinkedIn", "first_seen": "2026-09-25 11:17"}, {"id": "a0ea7aecf03d02cf", "title": "Pentester / Ethical hacker H/F", "company": "Almond", "location": "Sèvres", "link": "https://fr.linkedin.com/jobs/view/pentester-ethical-hacker-h-f-at-almond-4462849150", "source": "LinkedIn", "first_seen": "2026-09-25 00:55"}, {"id": "60ad8ae1df87e89e", "title": "Arquus Stage - Systèmes Embarqués et Cybersécurité H/F", "company": "John Cockerill", "location": "France", "link": "https://www.hellowork.com/fr-fr/emplois/79020326.html", "source": "HelloWork", "first_seen": "2026-09-25 00:55"}, {"id": "f2a860c59fb3b140", "title": "Réalisation de contrôle cybersécurité des systèmes d’information [Stage]", "company": "Commandement de la cyberdéfense (COMCYBER)", "location": "Toulon", "link": "https://fr.linkedin.com/jobs/view/r%C3%A9alisation-de-contr%C3%B4le-cybers%C3%A9curit%C3%A9-des-syst%C3%A8mes-d%E2%80%99information-stage-at-french-cyber-command-4458411010", "source": "LinkedIn", "first_seen": "2026-09-24 23:54"}, {"id": "d9cd90218719efc1", "title": "Analyste SOC - Stage", "company": "Capgemini", "location": "Lyon", "link": "https://fr.linkedin.com/jobs/view/analyste-soc-stage-at-capgemini-4469193503", "source": "LinkedIn", "first_seen": "2026-09-24 23:54"}, {"id": "b2d69cd0a4353e76", "title": "Stage - Analyste VOC - Cybersécurité - Toulouse", "company": "Sopra Steria", "location": "Colomiers", "link": "https://fr.linkedin.com/jobs/view/stage-analyste-voc-cybers%C3%A9curit%C3%A9-toulouse-at-sopra-steria-4466091983", "source": "LinkedIn", "first_seen": "2026-09-24 21:53"}, {"id": "f93db74810087e97", "title": "Cybersecurity Analyst Intern", "company": "CybelAngel", "location": "Paris", "link": "https://fr.linkedin.com/jobs/view/cybersecurity-analyst-intern-at-cybelangel-4467726679", "source": "LinkedIn", "first_seen": "2026-09-24 21:43"}, {"id": "4b2892d97f49a43a", "title": "Stage ingénieur cybersécurité F/H/X", "company": "Socomec Group", "location": "Benfeld", "link": "https://fr.linkedin.com/jobs/view/stage-ing%C3%A9nieur-cybers%C3%A9curit%C3%A9-f-h-x-at-socomec-group-4468793930", "source": "LinkedIn", "first_seen": "2026-09-24 19:35"}, {"id": "3095cee42f6e31b1", "title": "Stage de fin d'études - Ingénieur.e cybersécurité H/F", "company": "Sagemcom", "location": "Bois-Colombes", "link": "https://fr.linkedin.com/jobs/view/stage-de-fin-d-%C3%A9tudes-ing%C3%A9nieur-e-cybers%C3%A9curit%C3%A9-h-f-at-sagemcom-4463236938", "source": "LinkedIn", "first_seen": "2026-09-24 19:35"}, {"id": "6387e1f9f33f769f", "title": "STAGE 6 MOIS CYBERSECURITÉ H/F", "company": "CEA", "location": "Grenoble", "link": "https://fr.linkedin.com/jobs/view/stage-6-mois-cybersecurit%C3%A9-h-f-at-cea-4467873140", "source": "LinkedIn", "first_seen": "2026-09-24 19:35"}, {"id": "dc3ae9de2ce18d0f", "title": "STAGE - Ingénieur cybersécurité (F/H)", "company": "Dassault Systèmes", "location": "Vélizy-Villacoublay", "link": "https://fr.linkedin.com/jobs/view/stage-ing%C3%A9nieur-cybers%C3%A9curit%C3%A9-f-h-at-dassault-syst%C3%A8mes-4464098101", "source": "LinkedIn", "first_seen": "2026-09-24 19:35"}, {"id": "a314820329e954b6", "title": "Stage - Intelligence artificielle & Cybersécurité : Comment s’adapter pour garantir la sécurité de ces nouveaux systèmes ?", "company": "Wavestone", "location": "Puteaux", "link": "https://fr.linkedin.com/jobs/view/stage-intelligence-artificielle-cybers%C3%A9curit%C3%A9-comment-s%E2%80%99adapter-pour-garantir-la-s%C3%A9curit%C3%A9-de-ces-nouveaux-syst%C3%A8mes-%3F-at-wavestone-4462160504", "source": "LinkedIn", "first_seen": "2026-09-24 19:35"}, {"id": "421039fceecda165", "title": "Stage - Cybersécurité et automatisation de la génération du plan de tests - F/H", "company": "Schneider Electric", "location": "Eybens", "link": "https://fr.linkedin.com/jobs/view/stage-cybers%C3%A9curit%C3%A9-et-automatisation-de-la-g%C3%A9n%C3%A9ration-du-plan-de-tests-f-h-at-schneider-electric-4469471735", "source": "LinkedIn", "first_seen": "2026-09-24 19:35"}, {"id": "b16e7fc9b3adb1a5", "title": "Stage - Cybersécurité : comment protéger les activités financières les plus critiques ?", "company": "Wavestone", "location": "Puteaux", "link": "https://fr.linkedin.com/jobs/view/stage-cybers%C3%A9curit%C3%A9-comment-prot%C3%A9ger-les-activit%C3%A9s-financi%C3%A8res-les-plus-critiques-%3F-at-wavestone-4444135123", "source": "LinkedIn", "first_seen": "2026-09-24 19:35"}, {"id": "3038000cbc085428", "title": "STAGE - Ingénieur Cybersécurité H/F - Février 2027", "company": "Fleury Michon", "location": "Pouzauges", "link": "https://fr.linkedin.com/jobs/view/stage-ing%C3%A9nieur-cybers%C3%A9curit%C3%A9-h-f-f%C3%A9vrier-2027-at-fleury-michon-4465688876", "source": "LinkedIn", "first_seen": "2026-09-24 19:35"}, {"id": "79dcb8f756044dc6", "title": "Network & Cyber Engineer Internship", "company": "Skynopy", "location": "Paris", "link": "https://fr.linkedin.com/jobs/view/network-cyber-engineer-internship-at-skynopy-4469044138", "source": "LinkedIn", "first_seen": "2026-09-24 19:35"}, {"id": "7c32901e56ba16fb", "title": "Stagiaire Analyste/Consultant en Cybersécurité", "company": "CybelAngel", "location": "Paris", "link": "https://fr.linkedin.com/jobs/view/stagiaire-analyste-consultant-en-cybers%C3%A9curit%C3%A9-at-cybelangel-4466564527", "source": "LinkedIn", "first_seen": "2026-09-24 19:35"}, {"id": "afdbf72fb766e365", "title": "Stage de fin d'études - Ingénieur Cybersécurité (F/H)", "company": "Ivalua", "location": "Massy", "link": "https://fr.linkedin.com/jobs/view/stage-de-fin-d-%C3%A9tudes-ing%C3%A9nieur-cybers%C3%A9curit%C3%A9-f-h-at-ivalua-4470457378", "source": "LinkedIn", "first_seen": "2026-09-24 19:35"}, {"id": "8d4815b05869f86e", "title": "Analyse Cybersécurité - 1 stage de fin d'études en pré-embauche F/H", "company": "VINCI Construction", "location": "Nanterre", "link": "https://fr.linkedin.com/jobs/view/analyse-cybers%C3%A9curit%C3%A9-1-stage-de-fin-d-%C3%A9tudes-en-pr%C3%A9-embauche-f-h-at-vinci-construction-4462099324", "source": "LinkedIn", "first_seen": "2026-09-24 19:35"}, {"id": "efefb14e40e91edd", "title": "Stage : Consultant/e Cybersécurité GRC - Défense & Sécurité - Le Plessis Robinson", "company": "CS GROUP", "location": "Le Plessis-Robinson", "link": "https://fr.linkedin.com/jobs/view/stage-consultant-e-cybers%C3%A9curit%C3%A9-grc-d%C3%A9fense-s%C3%A9curit%C3%A9-le-plessis-robinson-at-cs-group-4469915005", "source": "LinkedIn", "first_seen": "2026-09-24 19:35"}, {"id": "e47a45b38fabda22", "title": "Analyse Cybersécurité - 1 stage de fin d'études en pré-embauche F/H", "company": "VINCI", "location": "Nanterre", "link": "https://fr.linkedin.com/jobs/view/analyse-cybers%C3%A9curit%C3%A9-1-stage-de-fin-d-%C3%A9tudes-en-pr%C3%A9-embauche-f-h-at-vinci-4463783569", "source": "LinkedIn", "first_seen": "2026-09-24 19:35"}, {"id": "bef9047396c7e280", "title": "Stage – Analyste Cybersécurité & Transformation Digitale - H/F", "company": "Schneider Electric", "location": "Grenoble", "link": "https://fr.linkedin.com/jobs/view/stage-%E2%80%93-analyste-cybers%C3%A9curit%C3%A9-transformation-digitale-h-f-at-schneider-electric-4471460114", "source": "LinkedIn", "first_seen": "2026-09-24 19:35"}, {"id": "f906212defc4cbb5", "title": "STAGE - Analyste CERT : Réponse Incident IA - H/F", "company": "SYNETIS", "location": "Cesson-Sévigné", "link": "https://fr.linkedin.com/jobs/view/stage-analyste-cert-r%C3%A9ponse-incident-ia-h-f-at-synetis-4467575577", "source": "LinkedIn", "first_seen": "2026-09-24 19:35"}, {"id": "f305d3855bfdf2a4", "title": "Stage – Consultant Sécurité IAM RUN (H/F)", "company": "SYNETIS", "location": "Cesson-Sévigné", "link": "https://fr.linkedin.com/jobs/view/stage-%E2%80%93-consultant-s%C3%A9curit%C3%A9-iam-run-h-f-at-synetis-4462946302", "source": "LinkedIn", "first_seen": "2026-09-24 19:35"}, {"id": "e7dbf233924361a5", "title": "Stage    -     Stage de fin d’études / Ingénieur Innovation Cybersécurité & Cryptographie Avancée - Rennes, France  (H/F)", "company": "Astek", "location": "Rennes", "link": "https://fr.linkedin.com/jobs/view/stage-stage-de-fin-d%E2%80%99%C3%A9tudes-ing%C3%A9nieur-innovation-cybers%C3%A9curit%C3%A9-cryptographie-avanc%C3%A9e-rennes-france-h-f-at-astek-4462233622", "source": "LinkedIn", "first_seen": "2026-09-24 19:35"}, {"id": "23a63901f41b0816", "title": "Stage - Analyste Cybersécurité - Response - Toulouse", "company": "Sopra Steria", "location": "Colomiers", "link": "https://fr.linkedin.com/jobs/view/stage-analyste-cybers%C3%A9curit%C3%A9-response-toulouse-at-sopra-steria-4467092815", "source": "LinkedIn", "first_seen": "2026-09-24 19:35"}, {"id": "9a4a3780b8d4cb89", "title": "Final Year Internship Consultant - Cybersecurity", "company": "Sia", "location": "Paris", "link": "https://fr.linkedin.com/jobs/view/final-year-internship-consultant-cybersecurity-at-sia-4471497583", "source": "LinkedIn", "first_seen": "2026-09-24 19:35"}, {"id": "e2e9bbba584e32c5", "title": "Stage - 6 mois - Ingénieur Sécurité Informatique F/H", "company": "BPCE Infogérance & Technologies", "location": "Balma", "link": "https://fr.linkedin.com/jobs/view/stage-6-mois-ing%C3%A9nieur-s%C3%A9curit%C3%A9-informatique-f-h-at-bpce-infog%C3%A9rance-technologies-4465986640", "source": "LinkedIn", "first_seen": "2026-09-24 19:35"}, {"id": "246b4c93ea9d8eec", "title": "Stage de fin d'études - Ingénieur(e) Cybersécurité", "company": "Ateme", "location": "Rennes", "link": "https://fr.linkedin.com/jobs/view/stage-de-fin-d-%C3%A9tudes-ing%C3%A9nieur-e-cybers%C3%A9curit%C3%A9-at-ateme-4467642113", "source": "LinkedIn", "first_seen": "2026-09-24 19:35"}, {"id": "a72d2e296044aef1", "title": "Stage - Audit & Déploiement Cybersécurité", "company": "TerX", "location": "Levallois-Perret", "link": "https://fr.linkedin.com/jobs/view/stage-audit-d%C3%A9ploiement-cybers%C3%A9curit%C3%A9-at-terx-4470955936", "source": "LinkedIn", "first_seen": "2026-09-24 19:35"}, {"id": "a9f86bd6586f4e45", "title": "STAGE - Consultant Cybersécurité - GRC H/F", "company": "SYNETIS", "location": "Paris", "link": "https://fr.linkedin.com/jobs/view/stage-consultant-cybers%C3%A9curit%C3%A9-grc-h-f-at-synetis-4457459762", "source": "LinkedIn", "first_seen": "2026-09-24 19:35"}, {"id": "96dda0b1ee9579fa", "title": "Consultant Cybersécurité – Pentester / Auditeur Technique (H/F)", "company": "Keyrus", "location": "France", "link": "https://fr.linkedin.com/jobs/view/consultant-cybers%C3%A9curit%C3%A9-%E2%80%93-pentester-auditeur-technique-h-f-at-keyrus-4335842180", "source": "LinkedIn", "first_seen": "2026-09-24 19:35"}, {"id": "6aa6e7051201a7e9", "title": "Auditeur/Pentester (Web & Mobile) (H/F) - (KSC/IEC/092026)", "company": "SERMA Safety and Security", "location": "Ville de Paris", "link": "https://fr.linkedin.com/jobs/view/auditeur-pentester-web-mobile-h-f-ksc-iec-092026-at-serma-safety-and-security-4419279567", "source": "LinkedIn", "first_seen": "2026-09-24 19:35"}, {"id": "97992aa9ccac4695", "title": "Auditeur confirmé en cybersécurité (pentester) – 2 postes", "company": "Préfecture de Police", "location": "Paris", "link": "https://fr.linkedin.com/jobs/view/auditeur-confirm%C3%A9-en-cybers%C3%A9curit%C3%A9-pentester-%E2%80%93-2-postes-at-pr%C3%A9fecture-de-police-4457758301", "source": "LinkedIn", "first_seen": "2026-09-24 19:35"}, {"id": "8bc1007868618d47", "title": "Pentester expérimenté / Red Teamer H/F", "company": "SYNETIS", "location": "Paris", "link": "https://fr.linkedin.com/jobs/view/pentester-exp%C3%A9riment%C3%A9-red-teamer-h-f-at-synetis-4431902994", "source": "LinkedIn", "first_seen": "2026-09-24 19:35"}, {"id": "e48dff76d7f928f7", "title": "Auditeur / Pentester (F/H)", "company": "Advens", "location": "Paris", "link": "https://fr.linkedin.com/jobs/view/auditeur-pentester-f-h-at-advens-4460343060", "source": "LinkedIn", "first_seen": "2026-09-24 19:35"}, {"id": "8133dfc27824a671", "title": "Stage – Sécurité Opérationnelle & DevSecOps – Cybersécurité (H/F/X) - Mode - Février 2027", "company": "CHANEL", "location": "Paris", "link": "https://fr.linkedin.com/jobs/view/stage-%E2%80%93-s%C3%A9curit%C3%A9-op%C3%A9rationnelle-devsecops-%E2%80%93-cybers%C3%A9curit%C3%A9-h-f-x-mode-f%C3%A9vrier-2027-at-chanel-4466135042", "source": "LinkedIn", "first_seen": "2026-09-24 19:35"}, {"id": "566859bdce2eaaf1", "title": "Pentester Web Application", "company": "GazelTech", "location": "Paris", "link": "https://fr.linkedin.com/jobs/view/pentester-web-application-at-gazeltech-4434996045", "source": "LinkedIn", "first_seen": "2026-09-24 19:35"}, {"id": "69649b781baad1e3", "title": "Consultant Cybersécurité / Pentester (H/F)", "company": "SCASSI - Expert cybersécurité des systèmes critiques & embarqués", "location": "Paris et périphérie", "link": "https://fr.linkedin.com/jobs/view/consultant-cybers%C3%A9curit%C3%A9-pentester-h-f-at-scassi-expert-cybers%C3%A9curit%C3%A9-des-syst%C3%A8mes-critiques-embarqu%C3%A9s-4454740452", "source": "LinkedIn", "first_seen": "2026-09-24 19:35"}, {"id": "d4935090614f0f81", "title": "STAGE - Cyber sécurité, banc d'intégration, IHM, protocoles réseaux, proxy et réseaux sans fil F/H", "company": "KNDS France", "location": "Versailles", "link": "https://fr.linkedin.com/jobs/view/stage-cyber-s%C3%A9curit%C3%A9-banc-d-int%C3%A9gration-ihm-protocoles-r%C3%A9seaux-proxy-et-r%C3%A9seaux-sans-fil-f-h-at-knds-france-4465250117", "source": "LinkedIn", "first_seen": "2026-09-24 19:35"}, {"id": "6ef52a9a7dc1b67f", "title": "STAGE - IA & Cybersécurité : Réinventer le triage des vulnérabilités (F/H)", "company": "Dassault Systèmes", "location": "Vélizy-Villacoublay", "link": "https://fr.linkedin.com/jobs/view/stage-ia-cybers%C3%A9curit%C3%A9-r%C3%A9inventer-le-triage-des-vuln%C3%A9rabilit%C3%A9s-f-h-at-dassault-syst%C3%A8mes-4467240065", "source": "LinkedIn", "first_seen": "2026-09-24 19:35"}, {"id": "11e65038ef2a6f1e", "title": "Security Engineer - Pentester", "company": "Scaleway", "location": "Paris", "link": "https://fr.linkedin.com/jobs/view/security-engineer-pentester-at-scaleway-4469383314", "source": "LinkedIn", "first_seen": "2026-09-24 19:35"}, {"id": "11f856d4aa61adb7", "title": "Pentester Web (H/F)", "company": "Lexfo (Forward Global Cyber)", "location": "Ville de Paris", "link": "https://fr.linkedin.com/jobs/view/pentester-web-h-f-at-lexfo-forward-global-cyber-4433876470", "source": "LinkedIn", "first_seen": "2026-09-24 19:35"}, {"id": "c20dafbe7302949a", "title": "Cyber Security Consultant / Penetration Tester", "company": "Cyberfero - Cyber Security and Cloud Computing services", "location": "Job", "link": "https://fr.linkedin.com/jobs/view/cyber-security-consultant-penetration-tester-at-cyberfero-cyber-security-and-cloud-computing-services-4439055100", "source": "LinkedIn", "first_seen": "2026-09-24 19:35"}, {"id": "3582a82cd9419a26", "title": "STAGE - Analyste SOC Niveau 2 (Français/Anglais) - F/H", "company": "EssilorLuxottica", "location": "Créteil", "link": "https://fr.linkedin.com/jobs/view/stage-analyste-soc-niveau-2-fran%C3%A7ais-anglais-f-h-at-essilorluxottica-4467709912", "source": "LinkedIn", "first_seen": "2026-09-24 19:35"}, {"id": "61e91f7091afa20d", "title": "Analyste SOC - Stage", "company": "Capgemini", "location": "Montbonnot-Saint-Martin", "link": "https://fr.linkedin.com/jobs/view/analyste-soc-stage-at-capgemini-4469190506", "source": "LinkedIn", "first_seen": "2026-09-24 19:35"}, {"id": "0acea24daefccbfd", "title": "Stage - Analyste MDR - Detection Cybersécurité - Rennes", "company": "Sopra Steria", "location": "Cesson-Sévigné", "link": "https://fr.linkedin.com/jobs/view/stage-analyste-mdr-detection-cybers%C3%A9curit%C3%A9-rennes-at-sopra-steria-4469172459", "source": "LinkedIn", "first_seen": "2026-09-24 19:35"}, {"id": "730aee0786187cb5", "title": "Stage - Analyste MDR - Detection Cybersécurité - Île-de-France", "company": "Sopra Steria", "location": "Courbevoie", "link": "https://fr.linkedin.com/jobs/view/stage-analyste-mdr-detection-cybers%C3%A9curit%C3%A9-%C3%AEle-de-france-at-sopra-steria-4462835914", "source": "LinkedIn", "first_seen": "2026-09-24 19:35"}, {"id": "5df14538e8b57ebb", "title": "Analyste SOC - Stage", "company": "Capgemini", "location": "Valbonne", "link": "https://fr.linkedin.com/jobs/view/analyste-soc-stage-at-capgemini-4469189713", "source": "LinkedIn", "first_seen": "2026-09-24 19:35"}, {"id": "8d16f1f7ea30010e", "title": "Analyste Cyberdéfense -1 stage de fin d'études en pré-embauche F/H", "company": "VINCI", "location": "Nanterre", "link": "https://fr.linkedin.com/jobs/view/analyste-cyberd%C3%A9fense-1-stage-de-fin-d-%C3%A9tudes-en-pr%C3%A9-embauche-f-h-at-vinci-4463784540", "source": "LinkedIn", "first_seen": "2026-09-24 19:35"}, {"id": "9a088a1469a95013", "title": "Analyste Cyberdéfense -1 stage de fin d'études en pré-embauche F/H", "company": "VINCI Construction", "location": "Nanterre", "link": "https://fr.linkedin.com/jobs/view/analyste-cyberd%C3%A9fense-1-stage-de-fin-d-%C3%A9tudes-en-pr%C3%A9-embauche-f-h-at-vinci-construction-4462107102", "source": "LinkedIn", "first_seen": "2026-09-24 19:35"}, {"id": "6e9facab0d8294e1", "title": "OFFRE DE STAGE: ANALYSTE SECURITY OPERATIONS CENTER (SOC)", "company": "Bénin Digital", "location": "Montfaucon", "link": "https://fr.linkedin.com/jobs/view/offre-de-stage-analyste-security-operations-center-soc-at-b%C3%A9nin-digital-4200275207", "source": "LinkedIn", "first_seen": "2026-09-24 19:35"}, {"id": "b0bae000f3a624e5", "title": "Stage - Analyste DevSecOps & IA F/H", "company": "VINCI Energies", "location": "Le Mans", "link": "https://fr.linkedin.com/jobs/view/stage-analyste-devsecops-ia-f-h-at-vinci-energies-4464339929", "source": "LinkedIn", "first_seen": "2026-09-24 19:35"}, {"id": "e0a69e84aac343ba", "title": "Stage - 6 mois - Expert Sécurité DATA F/H", "company": "BPCE Infogérance & Technologies", "location": "Balma", "link": "https://fr.linkedin.com/jobs/view/stage-6-mois-expert-s%C3%A9curit%C3%A9-data-f-h-at-bpce-infog%C3%A9rance-technologies-4465580905", "source": "LinkedIn", "first_seen": "2026-09-24 19:35"}, {"id": "84b244038fb3eadf", "title": "Administrateur Cybersécurité (H/F) - Alternance", "company": "Institut F2I", "location": "Paris", "link": "https://fr.linkedin.com/jobs/view/administrateur-cybers%C3%A9curit%C3%A9-h-f-alternance-at-institut-f2i-4407329918", "source": "LinkedIn", "first_seen": "2026-09-24 19:35"}, {"id": "f3bbb8e8b0558059", "title": "Stage Cybersecurité H/F", "company": "CEA", "location": "Grenoble - 38", "link": "https://www.hellowork.com/fr-fr/emplois/83520060.html", "source": "HelloWork", "first_seen": "2026-09-24 19:35"}, {"id": "63ff08fe5d689786", "title": "Stage Cybersécurité Grc H/F", "company": "Capgemini", "location": "Toulouse - 31", "link": "https://www.hellowork.com/fr-fr/emplois/83407333.html", "source": "HelloWork", "first_seen": "2026-09-24 19:35"}, {"id": "ff27c626793c12fa", "title": "Stage Logiciel Cybersécurité Embarquée H/F", "company": "MBDA", "location": "France", "link": "https://www.hellowork.com/fr-fr/emplois/83540249.html", "source": "HelloWork", "first_seen": "2026-09-24 19:35"}, {"id": "420628bb84d07f78", "title": "Développeur Cybersécurité dans les Applications Web H/F", "company": "Viveris.", "location": "Lyon - 69", "link": "https://www.hellowork.com/fr-fr/emplois/81062092.html", "source": "HelloWork", "first_seen": "2026-09-24 19:35"}, {"id": "97d6a0b9dbf9f0bf", "title": "Stage - Analyste Voc - Cybersécurité - Toulouse H/F", "company": "Sopra Steria", "location": "Colomiers - 31", "link": "https://www.hellowork.com/fr-fr/emplois/83043553.html", "source": "HelloWork", "first_seen": "2026-09-24 19:35"}, {"id": "e1f4edbcb0e28c0c", "title": "Stage - Stage de Fin d'Études - Ingénieur Innovation Cybersécurité & Cryptographie Avancée H/F", "company": "Astek", "location": "Rennes - 35", "link": "https://www.hellowork.com/fr-fr/emplois/78284120.html", "source": "HelloWork", "first_seen": "2026-09-24 19:35"}, {"id": "91b83e87189f71dd", "title": "Stage - Analyste Mdr - Detection Cybersécurité - Toulouse H/F", "company": "Sopra Steria", "location": "Colomiers - 31", "link": "https://www.hellowork.com/fr-fr/emplois/82999801.html", "source": "HelloWork", "first_seen": "2026-09-24 19:35"}, {"id": "4fb5f00f35d04ea9", "title": "Stage - Analyste Mdr - Detection Cybersécurité - Rennes H/F", "company": "Sopra Steria", "location": "Cesson-Sévigné - 35", "link": "https://www.hellowork.com/fr-fr/emplois/82999798.html", "source": "HelloWork", "first_seen": "2026-09-24 19:35"}, {"id": "513cf3ccde4fec18", "title": "Stage - Alternance - Chef de Projet Grc et Cybersécurité H/F", "company": "Groupe ONET", "location": "Marseille - 13", "link": "https://www.hellowork.com/fr-fr/emplois/81934256.html", "source": "HelloWork", "first_seen": "2026-09-24 19:35"}, {"id": "ddc4c4f537170572", "title": "Stage - Chef de Projets Cybersécurité H/F", "company": "Vinci Energies France Tertiaire Centre Est Sud", "location": "Dardilly - 69", "link": "https://www.hellowork.com/fr-fr/emplois/83683977.html", "source": "HelloWork", "first_seen": "2026-09-24 19:35"}, {"id": "dfa778a90320ba96", "title": "Stage - Analyste Mdr - Detection Cybersécurité - Île-De-France H/F", "company": "Sopra Steria", "location": "Courbevoie - 92", "link": "https://www.hellowork.com/fr-fr/emplois/82999800.html", "source": "HelloWork", "first_seen": "2026-09-24 19:35"}, {"id": "11ce5ae2386e42b1", "title": "Ingénieure - Ingénieur Cybersécurité Grc - Stage H/F", "company": "Capgemini", "location": "Lille - 59", "link": "https://www.hellowork.com/fr-fr/emplois/83602218.html", "source": "HelloWork", "first_seen": "2026-09-24 19:35"}, {"id": "8a819e97ef4eba57", "title": "Ingénieure - Ingénieur Cybersécurité Grc - Stage H/F", "company": "Capgemini", "location": "Nantes - 44", "link": "https://www.hellowork.com/fr-fr/emplois/83520862.html", "source": "HelloWork", "first_seen": "2026-09-24 19:35"}, {"id": "4989f65dc47da42f", "title": "Ingénieure - Ingénieur Cybersécurité Grc - Stage H/F", "company": "Capgemini", "location": "Lille - 59", "link": "https://www.hellowork.com/fr-fr/emplois/83526325.html", "source": "HelloWork", "first_seen": "2026-09-24 19:35"}, {"id": "900a9f412da936e2", "title": "Ingénieure - Ingénieur Cybersécurité Grc - Stage H/F", "company": "Capgemini", "location": "Mérignac - 33", "link": "https://www.hellowork.com/fr-fr/emplois/83407110.html", "source": "HelloWork", "first_seen": "2026-09-24 19:35"}, {"id": "723845a058cee0eb", "title": "Stage de Fin d'Études - Ingénieur Cybersécurité H/F", "company": "TEAM Y", "location": "1 867,02 € / mois", "link": "https://www.hellowork.com/fr-fr/emplois/82222422.html", "source": "HelloWork", "first_seen": "2026-09-24 19:35"}, {"id": "7da7a688225febb1", "title": "Stage - Ingénieur Cybersécurité - Février 2027 H/F", "company": "Fleury Michon", "location": "France", "link": "https://www.hellowork.com/fr-fr/emplois/83254751.html", "source": "HelloWork", "first_seen": "2026-09-24 19:35"}, {"id": "6c3bfb038d241e4c", "title": "Stage - Analyste Cybersécurité - Response - Toulouse H/F", "company": "Sopra Steria", "location": "Colomiers - 31", "link": "https://www.hellowork.com/fr-fr/emplois/83035581.html", "source": "HelloWork", "first_seen": "2026-09-24 19:35"}, {"id": "49fef7e222a09e1a", "title": "Stage Consultant·e Cybersécurité Grc - Défense & Sécurité - le Plessis Robinson H/F", "company": "Sopra Steria", "location": "Le Plessis-Robinson - 92", "link": "https://www.hellowork.com/fr-fr/emplois/83584332.html", "source": "HelloWork", "first_seen": "2026-09-24 19:35"}, {"id": "72aa8c754c5517ed", "title": "Formation Cyber Xp Epsi Bordeaux - Bac+3 - 5 + Stage Cybersécurité 4Mois H/F", "company": "EPSI Bordeaux", "location": "Bordeaux - 33", "link": "https://www.hellowork.com/fr-fr/emplois/81798213.html", "source": "HelloWork", "first_seen": "2026-09-24 19:35"}, {"id": "a1ee6827404b6e9b", "title": "Stage Ingénieur·e Intégration et Automatisation Linux - Défense & Sécurité - le Plessis Robinson H/F", "company": "Sopra Steria", "location": "Le Plessis-Robinson - 92", "link": "https://www.hellowork.com/fr-fr/emplois/83642146.html", "source": "HelloWork", "first_seen": "2026-09-24 19:35"}, {"id": "e15696526cfa9e6d", "title": "Stage de Fin d'Études - Consultant Cybersécurité - Nantes - 2026 H/F", "company": "Forvis Mazars", "location": "Saint-Herblain - 44", "link": "https://www.hellowork.com/fr-fr/emplois/56411017.html", "source": "HelloWork", "first_seen": "2026-09-24 19:35"}, {"id": "95f617039c455b95", "title": "Ingénieure - Ingénieur Devsecops - Stage H/F", "company": "Capgemini", "location": "Issy-les-Moulineaux - 92", "link": "https://www.hellowork.com/fr-fr/emplois/83635709.html", "source": "HelloWork", "first_seen": "2026-09-24 19:35"}, {"id": "56c787cd66bb2899", "title": "Stage - - Ingénieur Sécurité Informatique H/F", "company": "BPCE Infogérance & Technologies", "location": "Balma - 31", "link": "https://www.hellowork.com/fr-fr/emplois/83432904.html", "source": "HelloWork", "first_seen": "2026-09-24 19:35"}, {"id": "6d715520bff8d03d", "title": "Stage - Conception de la Plateforme de Pilotage Cyber du Groupe Cma Cgm H/F", "company": "CMA CGM", "location": "Marseille - 13", "link": "https://www.hellowork.com/fr-fr/emplois/83447545.html", "source": "HelloWork", "first_seen": "2026-09-24 19:35"}, {"id": "2bc2bd1bf213f491", "title": "Stage - Cyber Operational Dashboard H/F", "company": "CMA CGM", "location": "Marseille - 13", "link": "https://www.hellowork.com/fr-fr/emplois/83301420.html", "source": "HelloWork", "first_seen": "2026-09-24 19:35"}, {"id": "d72390cfb8c27f63", "title": "Stagiaire en Analyse de Risques Cyber et Efficacité des Processus Internes H/F", "company": "Arkéa Asset Managment", "location": "France", "link": "https://www.hellowork.com/fr-fr/emplois/82463872.html", "source": "HelloWork", "first_seen": "2026-09-24 19:35"}, {"id": "a5f9678e256adfa4", "title": "Internship - Cyber Operational Dashboard H/F", "company": "CMA CGM", "location": "Marseille - 13", "link": "https://www.hellowork.com/fr-fr/emplois/83301261.html", "source": "HelloWork", "first_seen": "2026-09-24 19:35"}, {"id": "e1ab375ebd134c9b", "title": "Stage - Développeur de Moyens de Simulation Numériques pour la Défense - Défense & Sécurité - Rennes H/F", "company": "Sopra Steria", "location": "Chartres-de-Bretagne - 35", "link": "https://www.hellowork.com/fr-fr/emplois/83650499.html", "source": "HelloWork", "first_seen": "2026-09-24 19:35"}, {"id": "e3196cee5c3f75da", "title": "Stage - Consultant Fonctionel - Défense et Sécurité - Bordeaux H/F", "company": "Sopra Steria", "location": "Mérignac - 33", "link": "https://www.hellowork.com/fr-fr/emplois/81929929.html", "source": "HelloWork", "first_seen": "2026-09-24 19:35"}, {"id": "8b6e99326adcd450", "title": "Stage - Développeur·se Java - Défense et Sécurité - Lille H/F", "company": "Sopra Steria", "location": "Villeneuve-d'Ascq - 59", "link": "https://www.hellowork.com/fr-fr/emplois/83635852.html", "source": "HelloWork", "first_seen": "2026-09-24 19:35"}, {"id": "9103c0166c066b68", "title": "Stage - Ingénieur de Développement - Java - Défense & Sécurité - Rennes H/F", "company": "Sopra Steria", "location": "Cesson-Sévigné - 35", "link": "https://www.hellowork.com/fr-fr/emplois/83650526.html", "source": "HelloWork", "first_seen": "2026-09-24 19:35"}, {"id": "8ab2e19158076e6e", "title": "Stage - Intégration et Valorisation de Données Temps Réel dans Crimson pour la Gestion des Opérations de Sécurité Civile - Défense & Sécurité - Toulouse H/F", "company": "Sopra Steria", "location": "Toulouse - 31", "link": "https://www.hellowork.com/fr-fr/emplois/83577638.html", "source": "HelloWork", "first_seen": "2026-09-24 19:35"}, {"id": "d0bfb94e8352c665", "title": "Stage - Ingénieur Développement d'Applications Militaires - Défense & Sécurité - Rennes H/F", "company": "Sopra Steria", "location": "Cesson-Sévigné - 35", "link": "https://www.hellowork.com/fr-fr/emplois/83650506.html", "source": "HelloWork", "first_seen": "2026-09-24 19:35"}, {"id": "759b37dd36735e36", "title": "Stage - Ivq - Défense & Sécurité - le Plessis Robinson H/F", "company": "Sopra Steria", "location": "Le Plessis-Robinson - 92", "link": "https://www.hellowork.com/fr-fr/emplois/83102055.html", "source": "HelloWork", "first_seen": "2026-09-24 19:35"}, {"id": "95100486d4a1a476", "title": "Stage - Développeur·se d'Applications de Simulation C++ - Qt - Défense & Sécurité - Toulon H/F", "company": "Sopra Steria", "location": "France", "link": "https://www.hellowork.com/fr-fr/emplois/83102053.html", "source": "HelloWork", "first_seen": "2026-09-24 19:35"}, {"id": "6da5507e20ab3e20", "title": "Stage - Développeur Fullstack - Défense & Sécurité - Île-De-France H/F", "company": "Sopra Steria", "location": "Courbevoie - 92", "link": "https://www.hellowork.com/fr-fr/emplois/83006174.html", "source": "HelloWork", "first_seen": "2026-09-24 19:35"}, {"id": "290be4e2e0658b4a", "title": "Stage Ingénieur Logiciel - Défense & Sécurité - Bordeaux H/F", "company": "Sopra Steria", "location": "Mérignac - 33", "link": "https://www.hellowork.com/fr-fr/emplois/81929930.html", "source": "HelloWork", "first_seen": "2026-09-24 19:35"}];
+    let currentSource = "ALL";
+    let searchTerm = "";
+
+    function getBadgeClass(source) {
+      if (source === "LinkedIn") return "badge-linkedin";
+      if (source === "HelloWork") return "badge-hellowork";
+      return "badge-francetravail";
+    }
+
+    function renderOffers() {
+      const grid = document.getElementById("cardsGrid");
+      grid.innerHTML = "";
+
+      const filtered = ALL_OFFERS.filter(item => {
+        const matchSource = (currentSource === "ALL" || item.source === currentSource);
+        const searchTarget = `${item.title} ${item.company} ${item.location}`.toLowerCase();
+        const matchSearch = (!searchTerm || searchTarget.includes(searchTerm));
+        return matchSource && matchSearch;
+      });
+
+      document.getElementById("totalCount").innerText = filtered.length;
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="empty-state">
+            <h3>Aucune offre ne correspond à vos critères de recherche.</h3>
+            <p>Essayez de modifier votre mot-clé ou réinitialisez le filtre de plateforme.</p>
+          </div>
+        `;
+        return;
+      }
+
+      filtered.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "card";
+        const badgeClass = getBadgeClass(item.source);
+
+        card.innerHTML = `
+          <div>
+            <div class="card-top">
+              <span class="badge badge-stage">STAGE</span>
+              <span class="badge ${badgeClass}">${item.source}</span>
+            </div>
+            <h2 class="job-title">${item.title}</h2>
+            <div class="company-name">🏢 ${item.company}</div>
+            <div class="location">📍 ${item.location}</div>
+          </div>
+          <div class="card-footer">
+            <span class="detected-date">⏱️ ${item.first_seen || item.posted || 'Récent'}</span>
+            <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="apply-btn">
+              Voir & Postuler ➔
+            </a>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // Gestion de la recherche en temps réel
+    document.getElementById("searchInput").addEventListener("input", (e) => {
+      searchTerm = e.target.value.toLowerCase().trim();
+      renderOffers();
+    });
+
+    // Gestion des boutons de filtre
+    document.querySelectorAll(".filter-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        currentSource = btn.dataset.source;
+        renderOffers();
+      });
+    });
+
+    // Premier rendu
+    renderOffers();
+  </script>
+</body>
+</html>

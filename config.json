@@ -1,0 +1,36 @@
+{
+  "search": {
+    "keywords": [
+      "stage cybersécurité",
+      "stage cyber security",
+      "stage pentest",
+      "stage analyste SOC",
+      "stage sécurité informatique",
+      "stage DevSecOps",
+      "stage GRC cybersécurité"
+    ],
+    "location": "France",
+    "sources": {
+      "linkedin": true,
+      "hellowork": true,
+      "francetravail": true
+    }
+  },
+  "alerts": {
+    "desktop_notifications": true,
+    "sound": true,
+    "discord_webhook_url": "https://discord.com/api/webhooks/1552736036617064558/9RkSzvuixBPjYmwPbjJ1nhThemkCt0u96tp1eY29ggeHHbFI1Anzqw2_cncfim8qBk8w",
+    "telegram": {
+      "enabled": false,
+      "bot_token": "",
+      "chat_id": ""
+    }
+  },
+  "scheduler": {
+    "interval_minutes": 30
+  },
+  "dashboard": {
+    "auto_open": true,
+    "filename": "stages_cyber_dashboard.html"
+  }
+}
